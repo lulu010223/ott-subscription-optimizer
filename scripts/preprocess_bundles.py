@@ -59,10 +59,21 @@ def main():
             })
 
             for provider, plan_tier in zip(providers, plan_tiers):
+                prefix = f"{provider} "
+
+                if not plan_tier.startswith(prefix):
+                  raise ValueError(
+                    f"{bundle_name}: "
+                    f"plan_tier '{plan_tier}'가 "
+                    f"provider '{provider}'와 일치하지 않습니다."
+                )
+
+                plan_name = plan_tier[len(prefix):].strip()
+
                 bundle_providers.append({
                     "bundle_id": bundle_id,
                     "provider": provider,
-                    "plan_tier": plan_tier,
+                    "plan_name": plan_name,
                 })
 
     with BUNDLES_OUTPUT.open(
@@ -89,7 +100,7 @@ def main():
             fieldnames=[
                 "bundle_id",
                 "provider",
-                "plan_tier",
+                "plan_name",
             ],
         )
         writer.writeheader()
