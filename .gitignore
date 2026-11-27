@@ -227,3 +227,6 @@ data/processed/*
 
 # mock up 이미지
 mockup-image/*
+
+# BigQuery data backups
+backups/
